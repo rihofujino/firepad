@@ -1790,20 +1790,30 @@ firepad.RichTextToolbar = (function(global) {
       content.setAttribute('style', 'font-family:' + fonts[i]);
       items.push({ content: content, value: fonts[i] });
     }
-    return this.makeDropdown_('Font', 'font', items);
+    return this.makeDropdown_('フォント', 'font', items);
   };
 
   RichTextToolbar.prototype.makeFontSizeDropdown_ = function() {
     // NOTE: There must be matching .css styles in firepad.css.
-    var sizes = [9, 10, 12, 14, 18, 24, 32, 42];
-
+    //var sizes = [9, 10, 12, 14, 18, 24, 32, 42];
+    var sizes = [24, 32, 42];
     var items = [];
     for(var i = 0; i < sizes.length; i++) {
-      var content = utils.elt('span', sizes[i].toString());
-      content.setAttribute('style', 'font-size:' + sizes[i] + 'px; line-height:' + (sizes[i]-6) + 'px;');
+        var sizeName;
+        switch(sizes[i]){
+            case 24:
+                sizeName = '小見出し';
+                break;
+            case 32:
+                sizeName = '中見出し';
+            case 42:
+            sizeName = '大見出し';
+      　}
+      var content = utils.elt('span', sizeName);
+      content.setAttribute('style', 'font-size:' + sizes[i] + 'px; line-height:' + (sizes[i] - 6) + 'px;');
       items.push({ content: content, value: sizes[i] });
     }
-    return this.makeDropdown_('Size', 'font-size', items, 'px');
+    return this.makeDropdown_('サイズ', 'font-size', items, 'px');
   };
 
   RichTextToolbar.prototype.makeColorDropdown_ = function() {
@@ -1816,7 +1826,7 @@ firepad.RichTextToolbar = (function(global) {
       content.setAttribute('style', 'background-color:' + colors[i]);
       items.push({ content: content, value: colors[i] });
     }
-    return this.makeDropdown_('Color', 'color', items);
+    return this.makeDropdown_('色', 'color', items);
   };
 
   RichTextToolbar.prototype.makeDropdown_ = function(title, eventName, items, value_suffix) {
